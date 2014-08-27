@@ -1,0 +1,17 @@
+{
+    "contents" : "# Kaggle's\n# BIKE SHARING DEMAND\n# R implementation by Ana Narciso\n\n# Setting working directory\nsetwd(\"~/Dropbox/Novabase/Analytics Lab/Use Cases/Bike Sharing Demand\")\n\n# Loading training and test datasets\ntrain <- read.csv(\"~/Dropbox/Novabase/Analytics Lab/Use Cases/Bike Sharing Demand/train.csv\")\ntest <- read.csv(\"~/Dropbox/Novabase/Analytics Lab/Use Cases/Bike Sharing Demand/test.csv\")\n\n# Get the train set structure and summary\nstr(train)\nsummary(train)\n\n# No NA's\ntable(complete.cases(test))\n\n\n#\n# Feature Engineering\n#\n\n# Add dummy values to test dataframe\ntest$casual = NA\ntest$registered = NA\ntest$count = NA\n\n# Bind train and test data together - for applying the same set of operations\ncombi = rbind(train, test)\n\n# Convert some features to factors\ncombi$season = as.factor(combi$season)\ncombi$holiday = as.factor(combi$holiday)\ncombi$workingday = as.factor(combi$workingday)\ncombi$weather = as.factor(combi$weather)\n\n# Extract hour, weekday, month, and year from datetime\ncombi$datetime=strptime(as.character(combi$datetime), format=\"%Y-%m-%d %H:%M:%S\")\n#combi$weekday = as.factor(weekdays(combi$datetime))\n#combi$month = as.factor(months(combi$datetime))\ncombi$weekday = as.factor(combi$datetime$wday)\ncombi$month = as.factor(combi$datetime$mon)\ncombi$hour = as.factor(combi$datetime$hour)\ncombi$year = as.factor(1900 + combi$datetime$year)\n\n# split the sets\ntrain = combi[0:10886,]\ntest = combi[10887:17379,]\n\n\n#\n# Test\n#\n\n# \nlibrary(rattle)\nlibrary(rpart.plot)\nlibrary(RColorBrewer)\n\n\n# Multiple Linear Regression Example http://www.statmethods.net/stats/regression.html\nfit <- lm(count ~ season + holiday + workingday + weather + atemp + humidity + windspeed +\n            month + weekday + hour + year, data=train)\n\n# Other useful functions \ncoefficients(fit) # model coefficients\nconfint(fit, level=0.95) # CIs for model parameters \nfitted(fit) # predicted values\nresiduals(fit) # residuals\nanova(fit) # anova table \nvcov(fit) # covariance matrix for model parameters \ninfluence(fit) # regression diagnostics\n\n# diagnostic plots \nlayout(matrix(c(1,2,3,4),2,2)) # optional 4 graphs/page \nplot(fit)\n\n\nfancyRpartPlot(fit)\n\n#Predict and save file\nprediction <- predict(fit, test, type = \"vector\")\nsubmit <- data.frame(datetime = test$datetime, count = prediction)\nwrite.csv(submit, file = \"predictions.csv\", row.names = FALSE)\n\n# Simple linear regression\nxyplot(lnWeight ~ lnLength, data = alligator,\n       xlab = \"Snout vent length (inches) on log scale\",\n       ylab = \"Weight (pounds) on log scale\",\n       main = \"Alligators in Central Florida\"\n)\n\n",
+    "created" : 1406693126556.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "4102909",
+    "id" : "F88C6F1B",
+    "lastKnownWriteTime" : 1406702502,
+    "path" : "~/Dropbox/Novabase/Analytics Lab/Use Cases/Bike Sharing Demand/BikeSharingDemand.R",
+    "project_path" : "BikeSharingDemand.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "source_on_save" : false,
+    "type" : "r_source"
+}

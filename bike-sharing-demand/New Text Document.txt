@@ -1,0 +1,2 @@
+http://www.statmethods.net/stats/regression.html
+http://www.r-bloggers.com/simple-linear-regression-2/

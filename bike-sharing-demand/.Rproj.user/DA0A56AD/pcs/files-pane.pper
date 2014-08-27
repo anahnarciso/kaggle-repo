@@ -1,0 +1,9 @@
+{
+    "path" : "~/Dropbox/Novabase/Analytics Lab/Use Cases/Bike Sharing Demand",
+    "sortOrder" : [
+        {
+            "ascending" : true,
+            "columnIndex" : 2
+        }
+    ]
+}
