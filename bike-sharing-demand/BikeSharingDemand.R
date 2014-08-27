@@ -3,7 +3,7 @@
 # R implementation by Ana Narciso
 
 # Setting working directory
-setwd("D:/NB19342/Dropbox/Novabase/Analytics Lab/Use Cases/Bike Sharing Demand")
+setwd("C:/git/kaggle-repo/bike-sharing-demand")
 
 require(lattice) 
 library(lattice) 
@@ -12,8 +12,8 @@ library(rpart.plot)
 library(RColorBrewer)
 
 # Loading training and test datasets
-train <- read.csv("D:/NB19342/Dropbox/Novabase/Analytics Lab/Use Cases/Bike Sharing Demand/train.csv")
-test <- read.csv("D:/NB19342/Dropbox/Novabase/Analytics Lab/Use Cases/Bike Sharing Demand/test.csv")
+train <- read.csv("train.csv")
+test <- read.csv("test.csv")
 
 # Get the train set structure and summary
 str(train)
